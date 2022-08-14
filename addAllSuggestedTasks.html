@@ -1,0 +1,75 @@
+<template>
+    <lightning-button label="Suggested Task" 
+                        onclick={GetRelatedTask}>
+                    </lightning-button>
+    <div>
+    <lightning-card title="Custom Search Functionality in LWC" icon-name="standard:task">
+        <div if:true={errorMsg} style="margin-left: 3%;">
+            <p style="color: red;">{errorMsg}</p>
+        </div>
+
+        <lightning-layout multiple-rows="true" vertical-align="end">
+            <lightning-layout-item size="12" small-device-size="10" medium-device-size="8" large-device-size="6" padding="around-small">
+                    <div class="slds-form-element">
+                            <div class="slds-form-element__control">
+                                    <lightning-input type="text" 
+                                                     label="Enter Task Name" 
+                                                     onchange={handleTaskName} ></lightning-input>
+                            </div>
+                        </div> 
+            </lightning-layout-item>
+            <lightning-layout-item size="12" small-device-size="2" medium-device-size="2" large-device-size="2" padding="around-small">
+                    <lightning-button label="Search" 
+                                      variant="brand" 
+                                      onclick={handleSearch}></lightning-button>
+                </lightning-layout-item>
+            </lightning-layout><br/>
+
+        <div if:true={searchData}>
+            <lightning-datatable data={searchData} 
+                                 columns={col} 
+                                 key-field="id"
+                                 hide-checkbox-column="true"></lightning-datatable>
+        </div>
+    </lightning-card>
+    </div>
+<!--Above code is for search func-->
+    <template if:true={tasks}>
+            <lightning-card  title="Add Task">
+                <lightning-datatable columns={columns}
+                    key-field="id"
+                    onrowselection={handleRowSelection}
+                    data={tasks}>
+                </lightning-datatable>
+                <div>
+                    <lightning-button label="Add Task" 
+                                        disabled={isButtonDisabled} 
+                                        onclick={handleAssignSelectedTaskToProgram}>
+                                    </lightning-button>
+                    <lightning-button label="New Task" 
+                                     onclick={toggleModal}>
+                                 </lightning-button>
+                </div>
+            </lightning-card>
+            <template if:true={modalShown}>
+                <lightning-card>
+                    <lightning-record-edit-form object-api-name="Training_Task__c"
+                                                onsuccess={handleSuccess}>
+                        <lightning-input-field field-name="Name"> </lightning-input-field>
+                        <lightning-input-field field-name="Team_Category__c"> </lightning-input-field>
+                        <lightning-input-field field-name="No_of_Days_to_Complete__c"> </lightning-input-field>
+                        <lightning-input-field field-name="LOE_Minutes__c"> </lightning-input-field>
+                        <lightning-input-field field-name="Description__c"> </lightning-input-field>
+                        <lightning-input-field field-name="Task_Link__c"> </lightning-input-field>
+                        <lightning-button
+                            class="slds-m-top_small"
+                            type="submit"
+                            label="Save"
+                        >
+                        </lightning-button>
+                    </lightning-record-edit-form>
+                </lightning-card>
+            </template>
+    </template>
+    
+</template>
