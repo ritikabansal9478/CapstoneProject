@@ -1,52 +1,29 @@
 <template>
-    <lightning-button label="Suggested Task" 
+    <c-modal label="Suggested Task" 
+                onclick={GetRelatedTask} 
+                modal-shown-override={modalShown}>
+    <!--<lightning-button label="Suggested Task" 
                         onclick={GetRelatedTask}>
-                    </lightning-button>
-    <lightning-card title="Custom Search Functionality in LWC" icon-name="standard:task">
-        <div if:true={errorMsg} style="margin-left: 3%;">
-            <p style="color: red;">{errorMsg}</p>
-        </div>
-
-        <lightning-layout multiple-rows="true" vertical-align="end">
-            <lightning-layout-item size="12" small-device-size="10" medium-device-size="8" large-device-size="6" padding="around-small">
-                    <div class="slds-form-element">
-                            <div class="slds-form-element__control">
-                                    <lightning-input type="text" 
-                                                     label="Enter Task Name" 
-                                                     onchange={handleTaskName} ></lightning-input>
-                            </div>
-                        </div> 
-            </lightning-layout-item>
-            <lightning-layout-item size="12" small-device-size="2" medium-device-size="2" large-device-size="2" padding="around-small">
-                    <lightning-button label="Search" 
-                                      variant="brand" 
-                                      onclick={handleSearch}></lightning-button>
-                </lightning-layout-item>
-            </lightning-layout><br/>
-
-        <div if:true={searchData}>
-            <lightning-datatable data={searchData} 
-                                 columns={columns} 
-                                 key-field="id"
-                                 hide-checkbox-column="true"></lightning-datatable>
-        </div>
-    </lightning-card>
-<!--Above code is for search func-->
-    <template if:true={tasks}>
-            <lightning-card  title="Add Task" 
-                            onsubmit={handleSuccess}>
+                    </lightning-button> -->
+     <template if:true={tasks}>
+            <lightning-card>
+                <div class="slds-p-bottom_large">
                 <lightning-datatable columns={col}
                     key-field="id"
                     onrowselection={handleRowSelection}
                     data={tasks}>
                 </lightning-datatable>
+                </div>
                 <div>
-                    <lightning-button label="Add Task" 
+                    <lightning-button class="slds-p-left_small" 
+                                        label="Add Task" 
                                         disabled={isButtonDisabled} 
                                         onclick={handleAssignSelectedTaskToProgram}>
                                     </lightning-button>
-                    <lightning-button label="New Task" 
-                                     onclick={toggleModal}>
+                                  
+                    <lightning-button class="slds-p-left_small"
+                                      label="New Task" 
+                                      onclick={toggleModal}>
                                  </lightning-button>
                 </div>
             </lightning-card>
@@ -61,7 +38,7 @@
                         <lightning-input-field field-name="Description__c"> </lightning-input-field>
                         <lightning-input-field field-name="Task_Link__c"> </lightning-input-field>
                         <lightning-button
-                            class="slds-m-top_small"
+                            class="slds-m-top_small slds-p-left_small"
                             type="submit"
                             label="Save"
                         >
@@ -70,5 +47,34 @@
                 </lightning-card>
             </template>
     </template>
-    
+    </c-modal>
+    <lightning-card title="Custom Task Search Functionality in LWC" icon-name="standard:task">
+        <div if:true={errorMsg} style="margin-left: 3%;">
+            <p style="color: red;">{errorMsg}</p>
+        </div>
+
+        <lightning-layout multiple-rows="true" vertical-align="end">
+            <lightning-layout-item size="12" padding="around-small">
+                    <div class="slds-form-element">
+                            <div class="slds-form-element__control">
+                                    <lightning-input type="text" 
+                                                     label="Enter Task Name" 
+                                                     onchange={handleTaskName} ></lightning-input>
+                            </div>
+                        </div> 
+            </lightning-layout-item>
+            <lightning-layout-item size="12" padding="around-small">
+                    <lightning-button label="Search" 
+                                      variant="brand" 
+                                      onclick={handleSearch}></lightning-button>
+                </lightning-layout-item>
+            </lightning-layout><br/>
+
+        <div if:true={searchData}>
+            <lightning-datatable data={searchData} 
+                                 columns={columns} 
+                                 key-field="id"
+                                 hide-checkbox-column="true"></lightning-datatable>
+        </div>
+    </lightning-card>
 </template>
