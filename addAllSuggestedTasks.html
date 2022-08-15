@@ -2,7 +2,6 @@
     <lightning-button label="Suggested Task" 
                         onclick={GetRelatedTask}>
                     </lightning-button>
-    <div>
     <lightning-card title="Custom Search Functionality in LWC" icon-name="standard:task">
         <div if:true={errorMsg} style="margin-left: 3%;">
             <p style="color: red;">{errorMsg}</p>
@@ -27,16 +26,16 @@
 
         <div if:true={searchData}>
             <lightning-datatable data={searchData} 
-                                 columns={col} 
+                                 columns={columns} 
                                  key-field="id"
                                  hide-checkbox-column="true"></lightning-datatable>
         </div>
     </lightning-card>
-    </div>
 <!--Above code is for search func-->
     <template if:true={tasks}>
-            <lightning-card  title="Add Task">
-                <lightning-datatable columns={columns}
+            <lightning-card  title="Add Task" 
+                            onsubmit={handleSuccess}>
+                <lightning-datatable columns={col}
                     key-field="id"
                     onrowselection={handleRowSelection}
                     data={tasks}>
