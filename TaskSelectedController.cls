@@ -29,7 +29,6 @@ public with sharing class TaskSelectedController {
                     Task_Assignment__c taskInpro = new Task_Assignment__c();
                     taskInpro.Program__c  = programId;
                     taskInpro.Training_Task__c = tlist;
-                    //taskInpro.Days_Assigned_for_Task__c	 = tlist.Days_Assigned_for_Task__c;
                     taskInProgram.add(taskInpro);
                 }
             insert taskInProgram;
